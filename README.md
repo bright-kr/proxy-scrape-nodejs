@@ -1,7 +1,7 @@
-[![Promo](https://brightdata.com/static/github_promo_15.png?md5=105367-daeb786e)](https://brightdata.com/?promo=github15) 
+[![Promo](https://brightdata.co.kr/static/github_promo_15.png?md5=105367-daeb786e)](https://brightdata.co.kr/?promo=github15) 
 
-# How to Use Proxy Servers in Node.js
-Learn how to integrate a proxy into `node-fetch`, Playwright, and Puppeteer. You'll also see how to use Bright Data' [residential proxies](https://brightdata.com/proxy-types/residential-proxies) in Axios. The guide is also available on the [Bright Data blog](https://brightdata.com/blog/how-tos/nodejs-proxy-servers).
+# Node.js에서 プロキシ 서버를 사용하는 방법
+`node-fetch`, Playwright, Puppeteer에 プロキシ를 통합하는 방법을 알아봅니다. 또한 Bright Data의 [レジデンシャルプロキシ](https://brightdata.co.kr/proxy-types/residential-proxies)를 Axios에서 사용하는 방법도 확인할 수 있습니다. 이 가이드는 [Bright Data blog](https://brightdata.co.kr/blog/how-tos/nodejs-proxy-servers)에서도 확인할 수 있습니다.
 
 - [Requirements](#requirements)
   * [Set Up a Local Proxy Server](#set-up-a-local-proxy-server)
@@ -15,9 +15,9 @@ Learn how to integrate a proxy into `node-fetch`, Playwright, and Puppeteer. You
   * [Testing IP Rotation](#testing-ip-rotation)
 
 ## Requirenments
-Make sure you have Node.js installed on your machine. Otherwise, download the installer from the [official site](https://nodejs.org/en/download), launch it, and follow the installation wizard.
+머신에 Node.js가 설치되어 있는지 확인합니다. 설치되어 있지 않다면 [official site](https://nodejs.org/en/download)에서 설치 프로그램을 다운로드하고 실행한 다음 설치 마법사의 안내에 따라 설치합니다.
 
-Create a folder for your Node.js project, enter it, and initialize an npm application inside it:
+Node.js 프로젝트용 폴더를 만들고 해당 폴더로 이동한 뒤, 그 안에서 npm 애플리케이션을 초기화합니다:
 ```bash
 mkdir <NODE_PROJECT_FOLDER_NAME>
 cd <NODE_PROJECT_FOLDER_NAME>
@@ -25,23 +25,23 @@ npm init -y
 ```
 
 ### Set Up a Local Proxy Server
-[mitmproxy](https://mitmproxy.org/) is an open-source interactive HTTPS proxy. Use it to set up a local proxy server.
+[mitmproxy](https://mitmproxy.org/)는 오픈 소스 대화형 HTTPS プロキシ입니다. 이를 사용하여 로컬 プロキシ 서버를 설정합니다.
 
-Install mitmproxy by following the [installation guide for your OS](https://docs.mitmproxy.org/stable/overview-installation/) and launch it:
+[OS용 installation guide](https://docs.mitmproxy.org/stable/overview-installation/)를 따라 mitmproxy를 설치한 다음 실행합니다:
 ```bash
 mitmproxy
 ```
-The following interface will show up:
+다음 인터페이스가 표시됩니다:
 ![The mitmproxy interface](resources/mitmproxy-interface.png)
 
-You now have a local proxy server listening locally on port `8080`. Verify that with this command:
+이제 포트 `8080`에서 로컬로 수신 대기하는 로컬 プロキシ 서버가 준비되었습니다. 다음 명령으로 이를 확인합니다:
 
 ```
 curl --proxy http://localhost:8080 "http://wttr.in/Paris?0"
 ```
-**Note**: On Windows, use `curl.exe` instead of `curl`.
+**Note**: Windows에서는 `curl` 대신 `curl.exe`를 사용합니다.
 
-The result should be something like:
+결과는 다음과 비슷해야 합니다:
 ```
 Weather report: Paris
 
@@ -52,25 +52,25 @@ Weather report: Paris
                 0.0 mm
 ```
 
-Go back to the mitmproxy interface, and see that it intercepted the request:
+mitmproxy 인터페이스로 돌아가서, リクエスト를 가로챈 것을 확인합니다:
 ![GET request intercepted by mitmproxy](resources/mitmproxy-interface-proxy.png)
 
 ## Integrating Proxies in Node.js
-Write a Node.js script to connect to a site via the local proxy server using the following technologies:
+다음 기술을 사용하여 로컬 プロキシ 서버를 통해 사이트에 연결하는 Node.js 스크립트를 작성합니다:
 * [`node-fetch`](https://www.npmjs.com/package/node-fetch)
 * [Playwright](https://playwaright.dev/)
 * [Puppeteer](https://pptr.dev/)
 
 ### Local Proxy Integration With `node-fetch`
-You need the `http-proxy-agent` library to configure a proxy in `node-fetch`.
+`node-fetch`에서 プロキシ를 구성하려면 `http-proxy-agent` 라이브러리가 필요합니다.
 
-Install them both with:
+다음으로 둘 다 설치합니다:
 ```bash
 npm install node-fetch http-proxy-agent
 ```
-**Note**: `node-fetch` v3.x is an ESM-only module. Set `"type"="module"` in your `package.json` to make it work.
+**Note**: `node-fetch` v3.x는 ESM-only 모듈입니다. 동작하도록 하려면 `package.json`에 `"type"="module"`을 설정합니다.
 
-Use the `fetch()` method to send requests through your proxy server:
+`fetch()` 메서드를 사용하여 プロキシ 서버를 통해 リクエスト를 전송합니다:
 ```javascript
 // node-fetch-proxy.js
 
@@ -102,18 +102,18 @@ fetchData("http://toscrape.com/");
 ```
 
 ### Local Proxy Integration in Playwright
-Add Playwright to your project's dependencies:
+프로젝트의 dependencies에 Playwright를 추가합니다:
 ```bash
 npm install playwright
 ```
 
-Finalize the Playwright installation with:
+다음으로 Playwright 설치를 마무리합니다:
 ```bash
 npx playwright install --with-deps
 ```
-**Note**: This will take a while as it'll also install the browser binaries and their dependencies.
+**Note**: 브라우저 바이너리와 그 dependencies도 설치하므로 시간이 다소 소요됩니다.
 
-Create a `playwright-proxy.js` file and integrate a proxy into Playwright:
+`playwright-proxy.js` 파일을 만들고 Playwright에 プロキシ를 통합합니다:
 ```javascript
 // playwright-proxy.js
 
@@ -144,12 +144,12 @@ import { chromium } from "playwright";
 ```
 
 ### Local Proxy Integration Using Puppeteer
-Install Puppeteer:
+Puppeteer를 설치합니다:
 ```bash
 npm install puppeteer
 ```
 
-Integrate the local proxy into Puppeteer as in the `puppeteer-proxy.js` script:
+`puppeteer-proxy.js` 스크립트에서처럼 로컬 プロキシ를 Puppeteer에 통합합니다:
 ```javascript
 // puppeteer-proxy.js
 
@@ -177,12 +177,12 @@ import puppeteer from "puppeteer";
 ```
 
 ## Testing Proxy Integration in Node.js
-Launch the Node.js proxy integration scripts with:
+다음으로 Node.js プロキシ 통합 스크립트를 실행합니다:
 ```bash
 node <NODE_SCRIPT_NAME>
 ```
 
-They'll print the following HTML:
+다음 HTML이 출력됩니다:
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -196,28 +196,28 @@ They'll print the following HTML:
     <!-- omitted for brevity ... -->
 ```
 
-The mitmproxy interface will log all the requests made by the script. With `node-fetch`, it'll be only the GET request to `http://toscrape.com/`. With Playwright and Puppeteer, it'll also include the requests the browser makes for loading the JS and CSS files of the page:
+mitmproxy 인터페이스에는 스크립트가 수행한 모든 リクエスト가 기록됩니다. `node-fetch`에서는 `http://toscrape.com/`에 대한 GET リクエスト만 표시됩니다. Playwright와 Puppeteer에서는 페이지의 JS 및 CSS 파일을 로드하기 위해 브라우저가 수행하는 リクエスト도 포함됩니다:
 ![Browser requests in the mitmproxy interface](resources/mitmproxy-interface-requests.png)
 
 ## Bright Data Proxy Integration in Node.js
-Bright Data provides [premium proxies](https://brightdata.com/proxy-types) that automatically rotate the exit IP for you. Let's see how to integrate them with Axios in a Node.js script.
+Bright Data는 출구 IP를 자동으로 로ーテーティングプロキシ해 주는 [premium proxies](https://brightdata.co.kr/proxy-types)를 제공합니다. Node.js 스크립트에서 Axios와 함께 이를 통합하는 방법을 살펴보겠습니다.
 
 ### Residential Proxy Configuration
-[Sign up for Bright Data](https://brightdata.com/cp/start) to start a free trial. Navigate to the "Proxies & Scraping Infrastructure" dashboard and configure a new residential proxy.
+무료 체험을 시작하려면 [Sign up for Bright Data](https://brightdata.co.kr/cp/start)합니다. "Proxies & Scraping Infrastructure" 대시보드로 이동하여 새 レジデンシャルプロキシ를 구성합니다.
 
-Retrieve the following credentials:
+다음 인증 정보를 가져옵니다:
 * `<BRIGHTDATA_PROXY_HOST>`
 * `<BRIGHTDATA_PROXY_PORT>`
 * `<BRIGHTDATA_PROXY_USERNAME>`
 * `<BRIGHTDATA_PROXY_PASSWORD>`
 
 ### Axios Proxy Setup
-Install Axios:
+Axios를 설치합니다:
 ```bash
 npm install axios
 ```
 
-Integrate a Bright Data residential proxies into Axios as in the `axios-proxy.js` script below:
+아래 `axios-proxy.js` 스크립트와 같이 Bright Data レジデンシャルプロキシ를 Axios에 통합합니다:
 ```javascript
 import axios from "axios";
 
@@ -250,11 +250,11 @@ fetchDataWithBrightData("http://lumtest.com/myip.json");
 ```
 
 ### Testing IP Rotation
-Run the Axios proxy integration script with:
+다음으로 Axios プロキシ 통합 스크립트를 실행합니다:
 ```
 node axios-proxy.js
 ```
 
-`http://lumtest.com/myip.json` is a special endpoint that returns information about your IP.
+`http://lumtest.com/myip.json`은 IP에 대한 정보를 반환하는 특별한 エンドポイント입니다.
 
-Execute the script several times and you'll see different IPs from different locations each time.
+스크립트를 여러 번 실행하면 매번 서로 다른 위치의 서로 다른 IPが表示됩니다.
