@@ -1,7 +1,7 @@
 [![Promo](https://brightdata.co.kr/static/github_promo_15.png?md5=105367-daeb786e)](https://brightdata.co.kr/?promo=github15) 
 
-# Node.js에서 プロキシ 서버를 사용하는 방법
-`node-fetch`, Playwright, Puppeteer에 プロキシ를 통합하는 방법을 알아봅니다. 또한 Bright Data의 [レジデンシャルプロキシ](https://brightdata.co.kr/proxy-types/residential-proxies)를 Axios에서 사용하는 방법도 확인할 수 있습니다. 이 가이드는 [Bright Data blog](https://brightdata.co.kr/blog/how-tos/nodejs-proxy-servers)에서도 확인할 수 있습니다.
+# Node.js에서 프록시 서버를 사용하는 방법
+`node-fetch`, Playwright, Puppeteer에 프록시를 통합하는 방법을 알아봅니다. 또한 Bright Data의 [レジデンシャル프록시](https://brightdata.co.kr/proxy-types/residential-proxies)를 Axios에서 사용하는 방법도 확인할 수 있습니다. 이 가이드는 [Bright Data blog](https://brightdata.co.kr/blog/how-tos/nodejs-proxy-servers)에서도 확인할 수 있습니다.
 
 - [Requirements](#requirements)
   * [Set Up a Local Proxy Server](#set-up-a-local-proxy-server)
@@ -25,7 +25,7 @@ npm init -y
 ```
 
 ### Set Up a Local Proxy Server
-[mitmproxy](https://mitmproxy.org/)는 오픈 소스 대화형 HTTPS プロキシ입니다. 이를 사용하여 로컬 プロキシ 서버를 설정합니다.
+[mitmproxy](https://mitmproxy.org/)는 오픈 소스 대화형 HTTPS 프록시입니다. 이를 사용하여 로컬 프록시 서버를 설정합니다.
 
 [OS용 installation guide](https://docs.mitmproxy.org/stable/overview-installation/)를 따라 mitmproxy를 설치한 다음 실행합니다:
 ```bash
@@ -34,7 +34,7 @@ mitmproxy
 다음 인터페이스가 표시됩니다:
 ![The mitmproxy interface](resources/mitmproxy-interface.png)
 
-이제 포트 `8080`에서 로컬로 수신 대기하는 로컬 プロキシ 서버가 준비되었습니다. 다음 명령으로 이를 확인합니다:
+이제 포트 `8080`에서 로컬로 수신 대기하는 로컬 프록시 서버가 준비되었습니다. 다음 명령으로 이를 확인합니다:
 
 ```
 curl --proxy http://localhost:8080 "http://wttr.in/Paris?0"
@@ -52,17 +52,17 @@ Weather report: Paris
                 0.0 mm
 ```
 
-mitmproxy 인터페이스로 돌아가서, リクエスト를 가로챈 것을 확인합니다:
+mitmproxy 인터페이스로 돌아가서, 요청를 가로챈 것을 확인합니다:
 ![GET request intercepted by mitmproxy](resources/mitmproxy-interface-proxy.png)
 
 ## Integrating Proxies in Node.js
-다음 기술을 사용하여 로컬 プロキシ 서버를 통해 사이트에 연결하는 Node.js 스크립트를 작성합니다:
+다음 기술을 사용하여 로컬 프록시 서버를 통해 사이트에 연결하는 Node.js 스크립트를 작성합니다:
 * [`node-fetch`](https://www.npmjs.com/package/node-fetch)
 * [Playwright](https://playwaright.dev/)
 * [Puppeteer](https://pptr.dev/)
 
 ### Local Proxy Integration With `node-fetch`
-`node-fetch`에서 プロキシ를 구성하려면 `http-proxy-agent` 라이브러리가 필요합니다.
+`node-fetch`에서 프록시를 구성하려면 `http-proxy-agent` 라이브러리가 필요합니다.
 
 다음으로 둘 다 설치합니다:
 ```bash
@@ -70,7 +70,7 @@ npm install node-fetch http-proxy-agent
 ```
 **Note**: `node-fetch` v3.x는 ESM-only 모듈입니다. 동작하도록 하려면 `package.json`에 `"type"="module"`을 설정합니다.
 
-`fetch()` 메서드를 사용하여 プロキシ 서버를 통해 リクエスト를 전송합니다:
+`fetch()` 메서드를 사용하여 프록시 서버를 통해 요청를 전송합니다:
 ```javascript
 // node-fetch-proxy.js
 
@@ -113,7 +113,7 @@ npx playwright install --with-deps
 ```
 **Note**: 브라우저 바이너리와 그 dependencies도 설치하므로 시간이 다소 소요됩니다.
 
-`playwright-proxy.js` 파일을 만들고 Playwright에 プロキシ를 통합합니다:
+`playwright-proxy.js` 파일을 만들고 Playwright에 프록시를 통합합니다:
 ```javascript
 // playwright-proxy.js
 
@@ -149,7 +149,7 @@ Puppeteer를 설치합니다:
 npm install puppeteer
 ```
 
-`puppeteer-proxy.js` 스크립트에서처럼 로컬 プロキシ를 Puppeteer에 통합합니다:
+`puppeteer-proxy.js` 스크립트에서처럼 로컬 프록시를 Puppeteer에 통합합니다:
 ```javascript
 // puppeteer-proxy.js
 
@@ -177,7 +177,7 @@ import puppeteer from "puppeteer";
 ```
 
 ## Testing Proxy Integration in Node.js
-다음으로 Node.js プロキシ 통합 스크립트를 실행합니다:
+다음으로 Node.js 프록시 통합 스크립트를 실행합니다:
 ```bash
 node <NODE_SCRIPT_NAME>
 ```
@@ -196,14 +196,14 @@ node <NODE_SCRIPT_NAME>
     <!-- omitted for brevity ... -->
 ```
 
-mitmproxy 인터페이스에는 스크립트가 수행한 모든 リクエスト가 기록됩니다. `node-fetch`에서는 `http://toscrape.com/`에 대한 GET リクエスト만 표시됩니다. Playwright와 Puppeteer에서는 페이지의 JS 및 CSS 파일을 로드하기 위해 브라우저가 수행하는 リクエスト도 포함됩니다:
+mitmproxy 인터페이스에는 스크립트가 수행한 모든 요청가 기록됩니다. `node-fetch`에서는 `http://toscrape.com/`에 대한 GET 요청만 표시됩니다. Playwright와 Puppeteer에서는 페이지의 JS 및 CSS 파일을 로드하기 위해 브라우저가 수행하는 요청도 포함됩니다:
 ![Browser requests in the mitmproxy interface](resources/mitmproxy-interface-requests.png)
 
 ## Bright Data Proxy Integration in Node.js
-Bright Data는 출구 IP를 자동으로 로ーテーティングプロキシ해 주는 [premium proxies](https://brightdata.co.kr/proxy-types)를 제공합니다. Node.js 스크립트에서 Axios와 함께 이를 통합하는 방법을 살펴보겠습니다.
+Bright Data는 출구 IP를 자동으로 로ーテーティング프록시해 주는 [premium proxies](https://brightdata.co.kr/proxy-types)를 제공합니다. Node.js 스크립트에서 Axios와 함께 이를 통합하는 방법을 살펴보겠습니다.
 
 ### Residential Proxy Configuration
-무료 체험을 시작하려면 [Sign up for Bright Data](https://brightdata.co.kr/cp/start)합니다. "Proxies & Scraping Infrastructure" 대시보드로 이동하여 새 レジデンシャルプロキシ를 구성합니다.
+무료 체험을 시작하려면 [Sign up for Bright Data](https://brightdata.co.kr/cp/start)합니다. "Proxies & Scraping Infrastructure" 대시보드로 이동하여 새 レジデンシャル프록시를 구성합니다.
 
 다음 인증 정보를 가져옵니다:
 * `<BRIGHTDATA_PROXY_HOST>`
@@ -217,7 +217,7 @@ Axios를 설치합니다:
 npm install axios
 ```
 
-아래 `axios-proxy.js` 스크립트와 같이 Bright Data レジデンシャルプロキシ를 Axios에 통합합니다:
+아래 `axios-proxy.js` 스크립트와 같이 Bright Data レジデンシャル프록시를 Axios에 통합합니다:
 ```javascript
 import axios from "axios";
 
@@ -250,11 +250,11 @@ fetchDataWithBrightData("http://lumtest.com/myip.json");
 ```
 
 ### Testing IP Rotation
-다음으로 Axios プロキシ 통합 스크립트를 실행합니다:
+다음으로 Axios 프록시 통합 스크립트를 실행합니다:
 ```
 node axios-proxy.js
 ```
 
-`http://lumtest.com/myip.json`은 IP에 대한 정보를 반환하는 특별한 エンドポイント입니다.
+`http://lumtest.com/myip.json`은 IP에 대한 정보를 반환하는 특별한 엔드포인트입니다.
 
 스크립트를 여러 번 실행하면 매번 서로 다른 위치의 서로 다른 IPが表示됩니다.
